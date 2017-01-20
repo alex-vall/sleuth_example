@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Properties>
+        <Property name="helloFileName">c:\log\sleuth_example.log</Property>
+        <Property name="datePattern">yyyy-MM-dd</Property>
+    </Properties>
+
+    <Appenders>
+        <Console name="consoleAppender" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy/MM/dd HH:mm:ss:SSS}|[%X{springAppName},%X{X-B3-TraceId},%X{X-B3-SpanId},%X{X-B3-ParentSpanId}]|%p|%C{1}.%M(%L)|%m%n"/>
+            <!--<PatternLayout pattern="%d{yyyy/MM/dd HH:mm:ss:SSS}|%X{X-B3-ParentSpanId}|%X{X-B3-SpanId}|%p|%C{1}.%M(%L)|%m%n"/>-->
+        </Console>
+
+        <RollingFile name="fileAppender" append="true" fileName="${helloFileName}"
+                     filePattern="${helloFileName}.%d{${datePattern}}">
+            <PatternLayout pattern="%d{yyyy/MM/dd HH:mm:ss:SSS}|%p|%X{playerID}|%C{1}.%M(%L)|%m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+        </RollingFile>
+
+    </Appenders>
+
+    <Loggers>
+        <Logger name="com.vall" level="DEBUG"/>
+
+        <Root level="INFO">
+            <AppenderRef ref="fileAppender"/>
+            <AppenderRef ref="consoleAppender"/>
+        </Root>
+    </Loggers>
+</Configuration>

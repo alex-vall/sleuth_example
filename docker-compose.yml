@@ -1,0 +1,50 @@
+# consul:
+#   image: gliderlabs/consul-server:0.5
+#   container_name: consul-test
+#   ports:
+#     - "8400:8400"
+#     - "8500:8500"
+#     - "53:8600/udp"
+#   command: "-bootstrap -advertise 192.168.99.100 -ui-dir /ui"
+#   restart: always
+# consul:
+#   image: consul
+#   environment:
+#     - SERVICE_IGNORE=true
+#   ports:
+#     - 8300:8300
+#     - 8301:8301
+#     - 8302:8302
+#     - 8300:8300/udp
+#     - 8301:8301/udp
+#     - 8302:8302/udp
+#     - 8500:8500
+#     - 8400:8400
+#     - 8600:8600
+#     - 8600:8600/udp
+#   command: agent -bind=0.0.0.0 -client=0.0.0.0 -server -bootstrap -ui -dev -recursor 8.8.8.8
+
+sleuth-example:
+  image: sleuth-example
+  ports:
+    - "8080:8080"
+  # links:
+    # - consul
+#    - jackpot-service
+  environment:
+    SERVICE_NAME: sleuth-example
+    SERVICE_CHECK_HTTP: /health
+    # SPRING_PROFILES_ACTIVE: consul
+
+# jackpot-service:
+#   image: jackpot-service
+#   ports:
+#     - "8080"
+#   links:
+#     - consul
+#   environment:
+#     SERVICE_NAME: jackpot-service
+#     SERVICE_CHECK_HTTP: /health
+#     SPRING_PROFILES_ACTIVE: consul
+
+

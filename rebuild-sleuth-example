@@ -1,0 +1,5 @@
+#!/bin/bash
+
+mvn clean package
+docker build --force-rm --tag sleuth-example .
+docker-compose up -d sleuth-example
